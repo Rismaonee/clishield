@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "name": "Steven Black Unified Hosts",
+      "url": "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+      "category": "ads+malware",
+      "enabled": true
+    },
+    {
+      "name": "AdGuard DNS Filter",
+      "url": "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt",
+      "category": "ads",
+      "enabled": true
+    },
+    {
+      "name": "Peter Lowe Ad and Tracking Server List",
+      "url": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext",
+      "category": "ads+tracking",
+      "enabled": true
+    },
+    {
+      "name": "Dan Pollock Hosts",
+      "url": "https://someonewhocares.org/hosts/zero/hosts",
+      "category": "ads+tracking",
+      "enabled": true
+    }
+  ]
+}
