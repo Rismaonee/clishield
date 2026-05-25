@@ -66,7 +66,7 @@ CliShield merges multiple community-maintained blocklists into your hosts file, 
 ### Homebrew (macOS / Linux)
 
 ```bash
-brew tap USER/clishield
+brew tap Rismaonee/clishield
 brew install clishield
 sudo clishield activate
 ```
@@ -74,13 +74,13 @@ sudo clishield activate
 ### One-Liner (macOS / Linux)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/USER/clishield/main/install.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/Rismaonee/clishield/main/install.sh | sudo bash
 ```
 
 ### Manual Install (macOS / Linux)
 
 ```bash
-git clone https://github.com/USER/clishield.git
+git clone https://github.com/Rismaonee/clishield.git
 cd clishield
 sudo bash install.sh
 ```
@@ -88,7 +88,7 @@ sudo bash install.sh
 ### Windows (PowerShell as Administrator)
 
 ```powershell
-git clone https://github.com/USER/clishield.git
+git clone https://github.com/Rismaonee/clishield.git
 cd clishield
 .\install.ps1
 ```
@@ -282,7 +282,7 @@ brew uninstall clishield
 ```powershell
 clishield deactivate
 Remove-Item "$env:ProgramFiles\clishield" -Recurse -Force
-Remove-Item "$env:USERPROFILE\.clishield" -Recurse -Force
+Remove-Item "$env:RismaoneePROFILE\.clishield" -Recurse -Force
 Unregister-ScheduledTask -TaskName "CliShield Weekly Update" -Confirm:$false
 # Remove from PATH manually via System Properties → Environment Variables
 ```
@@ -302,7 +302,7 @@ Contributions are welcome! Here's how to get started:
 ### Development Setup
 
 ```bash
-git clone https://github.com/USER/clishield.git
+git clone https://github.com/Rismaonee/clishield.git
 cd clishield
 # The clishield script is a standalone Python file — no build step needed.
 # Test locally:

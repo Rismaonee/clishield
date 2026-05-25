@@ -1,13 +1,13 @@
 # typed: false
 # frozen_string_literal: true
 
-class Adshield < Formula
+class Clishield < Formula
   desc "System-level ad blocker CLI tool"
-  homepage "https://github.com/USER/clishield"
-  url "https://github.com/USER/clishield/archive/refs/tags/v1.0.0.tar.gz"
+  homepage "https://github.com/Rismaonee/clishield"
+  url "https://github.com/Rismaonee/clishield/archive/refs/tags/v1.0.0.tar.gz"
   sha256 "UPDATE_WITH_REAL_SHA256_AFTER_RELEASE"
   license "MIT"
-  head "https://github.com/USER/clishield.git", branch: "main"
+  head "https://github.com/Rismaonee/clishield.git", branch: "main"
 
   depends_on "python@3"
 
