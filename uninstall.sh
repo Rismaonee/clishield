@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ──────────────────────────────────────────────────────────────
-#  AdShield Uninstaller — macOS / Linux
-#  Cleanly removes AdShield and restores system state.
+#  CliShield Uninstaller — macOS / Linux
+#  Cleanly removes CliShield and restores system state.
 # ──────────────────────────────────────────────────────────────
 set -euo pipefail
 
@@ -20,12 +20,12 @@ warn()    { printf "${YELLOW}[WARN]${NC}  %s\n" "$*"; }
 fail()    { printf "${RED}[FAIL]${NC}  %s\n" "$*"; exit 1; }
 
 # ── Configuration ─────────────────────────────────────────────
-INSTALL_BIN="/usr/local/bin/adshield"
-LAUNCHD_LABEL="com.adshield.update"
+INSTALL_BIN="/usr/local/bin/clishield"
+LAUNCHD_LABEL="com.clishield.update"
 
 REAL_HOME="${SUDO_USER:+$(eval echo "~${SUDO_USER}")}"
 REAL_HOME="${REAL_HOME:-$HOME}"
-CONFIG_DIR="${REAL_HOME}/.adshield"
+CONFIG_DIR="${REAL_HOME}/.clishield"
 LAUNCHD_PLIST="${REAL_HOME}/Library/LaunchAgents/${LAUNCHD_LABEL}.plist"
 
 # ── Banner ────────────────────────────────────────────────────
@@ -33,7 +33,7 @@ printf "${CYAN}${BOLD}"
 cat << 'EOF'
 
     ╔══════════════════════════════════════╗
-    ║     AdShield — Uninstaller          ║
+    ║     CliShield — Uninstaller          ║
     ╚══════════════════════════════════════╝
 
 EOF
@@ -45,15 +45,15 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # ── 1. Deactivate ad blocking ────────────────────────────────
-info "Deactivating AdShield…"
+info "Deactivating CliShield…"
 if [[ -x "${INSTALL_BIN}" ]]; then
     if "${INSTALL_BIN}" deactivate 2>/dev/null; then
-        success "AdShield deactivated — original hosts file restored."
+        success "CliShield deactivated — original hosts file restored."
     else
         warn "Deactivation returned a non-zero exit code. Your hosts file may need manual review."
     fi
 else
-    warn "adshield binary not found at ${INSTALL_BIN}; skipping deactivation."
+    warn "clishield binary not found at ${INSTALL_BIN}; skipping deactivation."
 fi
 
 # ── 2. Remove the binary ─────────────────────────────────────
@@ -85,7 +85,7 @@ else
             | crontab -u "${CRON_USER}" -
         success "Removed cron entry for ${CRON_USER}."
     else
-        warn "No adshield cron entry found for ${CRON_USER}; skipping."
+        warn "No clishield cron entry found for ${CRON_USER}; skipping."
     fi
 fi
 
@@ -100,8 +100,8 @@ fi
 
 # ── Done ──────────────────────────────────────────────────────
 echo ""
-printf "${GREEN}${BOLD}✔  AdShield has been completely uninstalled.${NC}\n"
+printf "${GREEN}${BOLD}✔  CliShield has been completely uninstalled.${NC}\n"
 echo ""
 info "Your system's hosts file has been restored to its original state."
-info "Thank you for using AdShield!"
+info "Thank you for using CliShield!"
 echo ""

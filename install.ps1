@@ -1,9 +1,9 @@
 #Requires -RunAsAdministrator
 <#
 .SYNOPSIS
-    AdShield Installer — Windows
+    CliShield Installer — Windows
 .DESCRIPTION
-    Installs the AdShield system-level ad blocker on Windows.
+    Installs the CliShield system-level ad blocker on Windows.
     Safe to run multiple times (idempotent).
 #>
 
@@ -11,11 +11,11 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 # ── Configuration ─────────────────────────────────────────────
-$InstallDir   = "$env:ProgramFiles\adshield"
-$InstallBin   = Join-Path $InstallDir 'adshield'
-$ConfigDir    = Join-Path $env:USERPROFILE '.adshield'
+$InstallDir   = "$env:ProgramFiles\clishield"
+$InstallBin   = Join-Path $InstallDir 'clishield'
+$ConfigDir    = Join-Path $env:USERPROFILE '.clishield'
 $ScriptDir    = Split-Path -Parent $MyInvocation.MyCommand.Definition
-$TaskName     = 'AdShield Weekly Update'
+$TaskName     = 'CliShield Weekly Update'
 
 # ── Helpers ───────────────────────────────────────────────────
 function Write-Banner {
@@ -67,14 +67,14 @@ if (-not $pythonCmd) {
 }
 Write-Success "Found $( & $pythonCmd --version 2>&1)"
 
-# 3. Verify adshield script exists
-$sourceScript = Join-Path $ScriptDir 'adshield'
+# 3. Verify clishield script exists
+$sourceScript = Join-Path $ScriptDir 'clishield'
 if (-not (Test-Path $sourceScript)) {
-    Write-Fail "Cannot find 'adshield' script in $ScriptDir. Make sure it is in the same directory as install.ps1."
+    Write-Fail "Cannot find 'clishield' script in $ScriptDir. Make sure it is in the same directory as install.ps1."
 }
 
 # 4. Install to Program Files
-Write-Info "Installing adshield to $InstallDir..."
+Write-Info "Installing clishield to $InstallDir..."
 if (-not (Test-Path $InstallDir)) {
     New-Item -ItemType Directory -Path $InstallDir -Force | Out-Null
 }
@@ -115,12 +115,12 @@ if ((Test-Path $sourcesFile) -and (-not (Test-Path $configSources))) {
 Write-Success "Config directory ready: $ConfigDir"
 
 # 7. Activate ad blocking
-Write-Info 'Activating AdShield...'
+Write-Info 'Activating CliShield...'
 try {
     & $pythonCmd $InstallBin activate
-    Write-Success 'AdShield is now active!'
+    Write-Success 'CliShield is now active!'
 } catch {
-    Write-Warn "Activation failed. You can retry with:  adshield activate"
+    Write-Warn "Activation failed. You can retry with:  clishield activate"
 }
 
 # 8. Set up weekly Task Scheduler job
@@ -145,7 +145,7 @@ try {
         -Action $action `
         -Trigger $trigger `
         -Settings $settings `
-        -Description 'Updates AdShield blocklists weekly.' `
+        -Description 'Updates CliShield blocklists weekly.' `
         -RunLevel Highest | Out-Null
 
     Write-Success "Registered scheduled task: '$TaskName' (Sundays at 04:00)"
@@ -155,13 +155,13 @@ try {
 
 # ── Done ──────────────────────────────────────────────────────
 Write-Host ''
-Write-Host '  AdShield installation complete!' -ForegroundColor Green
+Write-Host '  CliShield installation complete!' -ForegroundColor Green
 Write-Host ''
 Write-Info 'Useful commands:'
-Write-Host '    adshield status       Show current status'
-Write-Host '    adshield update       Update blocklists now'
-Write-Host '    adshield whitelist    Manage whitelisted domains'
-Write-Host '    adshield deactivate   Temporarily disable blocking'
+Write-Host '    clishield status       Show current status'
+Write-Host '    clishield update       Update blocklists now'
+Write-Host '    clishield whitelist    Manage whitelisted domains'
+Write-Host '    clishield deactivate   Temporarily disable blocking'
 Write-Host ''
 Write-Info "To uninstall, run the uninstaller or remove $InstallDir manually."
 Write-Host ''

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ──────────────────────────────────────────────────────────────
-#  AdShield Installer — macOS / Linux
+#  CliShield Installer — macOS / Linux
 #  Safe to run multiple times (idempotent).
 # ──────────────────────────────────────────────────────────────
 set -euo pipefail
@@ -39,10 +39,10 @@ EOF
 }
 
 # ── Configuration ─────────────────────────────────────────────
-INSTALL_BIN="/usr/local/bin/adshield"
-CONFIG_DIR="${HOME}/.adshield"
+INSTALL_BIN="/usr/local/bin/clishield"
+CONFIG_DIR="${HOME}/.clishield"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-LAUNCHD_LABEL="com.adshield.update"
+LAUNCHD_LABEL="com.clishield.update"
 LAUNCHD_PLIST="${HOME}/Library/LaunchAgents/${LAUNCHD_LABEL}.plist"
 
 # ── Main ──────────────────────────────────────────────────────
@@ -62,22 +62,22 @@ else
     fail "Python 3 is required but not found. Install it first: https://www.python.org/downloads/"
 fi
 
-# 3. Verify the adshield script exists next to this installer
-if [[ ! -f "${SCRIPT_DIR}/adshield" ]]; then
-    fail "Cannot find 'adshield' script in ${SCRIPT_DIR}. Make sure it is in the same directory as install.sh."
+# 3. Verify the clishield script exists next to this installer
+if [[ ! -f "${SCRIPT_DIR}/clishield" ]]; then
+    fail "Cannot find 'clishield' script in ${SCRIPT_DIR}. Make sure it is in the same directory as install.sh."
 fi
 
 # 4. Copy to /usr/local/bin
-info "Installing adshield to ${INSTALL_BIN}…"
+info "Installing clishield to ${INSTALL_BIN}…"
 mkdir -p "$(dirname "${INSTALL_BIN}")"
-cp -f "${SCRIPT_DIR}/adshield" "${INSTALL_BIN}"
+cp -f "${SCRIPT_DIR}/clishield" "${INSTALL_BIN}"
 chmod +x "${INSTALL_BIN}"
 success "Installed ${INSTALL_BIN}"
 
 # 5. Create config directory
 REAL_HOME="${SUDO_USER:+$(eval echo "~${SUDO_USER}")}"
 REAL_HOME="${REAL_HOME:-$HOME}"
-CONFIG_DIR="${REAL_HOME}/.adshield"
+CONFIG_DIR="${REAL_HOME}/.clishield"
 
 info "Creating config directory at ${CONFIG_DIR}…"
 mkdir -p "${CONFIG_DIR}"
@@ -100,11 +100,11 @@ fi
 success "Config directory ready: ${CONFIG_DIR}"
 
 # 6. Activate ad blocking
-info "Activating AdShield…"
+info "Activating CliShield…"
 if "${INSTALL_BIN}" activate; then
-    success "AdShield is now active!"
+    success "CliShield is now active!"
 else
-    warn "Activation returned a non-zero exit code. You can retry with: sudo adshield activate"
+    warn "Activation returned a non-zero exit code. You can retry with: sudo clishield activate"
 fi
 
 # 7. Set up automatic weekly updates (platform-specific)
@@ -159,7 +159,7 @@ setup_cron() {
     local cron_job="0 4 * * 0 ${INSTALL_BIN} update >> ${CONFIG_DIR}/update.log 2>&1"
     local cron_user="${SUDO_USER:-root}"
 
-    # Remove any existing adshield cron entry, then append
+    # Remove any existing clishield cron entry, then append
     (crontab -u "${cron_user}" -l 2>/dev/null | grep -v "${INSTALL_BIN}" || true; echo "${cron_job}") \
         | crontab -u "${cron_user}" -
     success "Added cron job for ${cron_user}: Sundays at 04:00"
@@ -172,13 +172,13 @@ esac
 
 # ── Done ──────────────────────────────────────────────────────
 echo ""
-printf "${GREEN}${BOLD}✔  AdShield installation complete!${NC}\n"
+printf "${GREEN}${BOLD}✔  CliShield installation complete!${NC}\n"
 echo ""
 info "Useful commands:"
-echo "    adshield status       Show current status"
-echo "    adshield update       Update blocklists now"
-echo "    adshield whitelist    Manage whitelisted domains"
-echo "    adshield deactivate   Temporarily disable blocking"
+echo "    clishield status       Show current status"
+echo "    clishield update       Update blocklists now"
+echo "    clishield whitelist    Manage whitelisted domains"
+echo "    clishield deactivate   Temporarily disable blocking"
 echo ""
 info "To uninstall:  sudo bash ${SCRIPT_DIR}/uninstall.sh"
 echo ""

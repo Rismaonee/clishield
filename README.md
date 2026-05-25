@@ -23,9 +23,9 @@
 
 ---
 
-## What is AdShield?
+## What is CliShield?
 
-**AdShield** is a lightweight CLI tool that blocks ads, trackers, and malware domains across your entire system by managing your operating system's hosts file. Every application — browsers, apps, games — benefits automatically. No browser extension required.
+**CliShield** is a lightweight CLI tool that blocks ads, trackers, and malware domains across your entire system by managing your operating system's hosts file. Every application — browsers, apps, games — benefits automatically. No browser extension required.
 
 ---
 
@@ -43,7 +43,7 @@
 │                              │                                   │
 │                              ▼                                   │
 │                    ┌──────────────────┐                          │
-│                    │   /etc/hosts     │  ◄── AdShield writes     │
+│                    │   /etc/hosts     │  ◄── CliShield writes     │
 │                    │  (hosts file)    │      blocked domains     │
 │                    └────────┬─────────┘      as 0.0.0.0         │
 │                             │                                    │
@@ -57,7 +57,7 @@
 └──────────────────────────────────────────────────────────────────┘
 ```
 
-AdShield merges multiple community-maintained blocklists into your hosts file, redirecting known ad/tracking/malware domains to `0.0.0.0` so requests to them silently fail.
+CliShield merges multiple community-maintained blocklists into your hosts file, redirecting known ad/tracking/malware domains to `0.0.0.0` so requests to them silently fail.
 
 ---
 
@@ -66,30 +66,30 @@ AdShield merges multiple community-maintained blocklists into your hosts file, r
 ### Homebrew (macOS / Linux)
 
 ```bash
-brew tap USER/adshield
-brew install adshield
-sudo adshield activate
+brew tap USER/clishield
+brew install clishield
+sudo clishield activate
 ```
 
 ### One-Liner (macOS / Linux)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/USER/adshield/main/install.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/USER/clishield/main/install.sh | sudo bash
 ```
 
 ### Manual Install (macOS / Linux)
 
 ```bash
-git clone https://github.com/USER/adshield.git
-cd adshield
+git clone https://github.com/USER/clishield.git
+cd clishield
 sudo bash install.sh
 ```
 
 ### Windows (PowerShell as Administrator)
 
 ```powershell
-git clone https://github.com/USER/adshield.git
-cd adshield
+git clone https://github.com/USER/clishield.git
+cd clishield
 .\install.ps1
 ```
 
@@ -111,55 +111,55 @@ All commands that modify the hosts file require `sudo` (macOS/Linux) or an Admin
 
 ```bash
 # Activate ad blocking
-sudo adshield activate
+sudo clishield activate
 
 # Deactivate (restore original hosts file)
-sudo adshield deactivate
+sudo clishield deactivate
 
 # Check current status
-adshield status
+clishield status
 
 # Update blocklists from sources
-sudo adshield update
+sudo clishield update
 ```
 
 ### Whitelist Management
 
 ```bash
 # Add a domain to the whitelist
-sudo adshield whitelist add example.com
+sudo clishield whitelist add example.com
 
 # Remove a domain from the whitelist
-sudo adshield whitelist remove example.com
+sudo clishield whitelist remove example.com
 
 # List all whitelisted domains
-adshield whitelist list
+clishield whitelist list
 ```
 
 ### Blocklist Sources
 
 ```bash
 # List configured sources
-adshield sources list
+clishield sources list
 
 # Enable a source
-adshield sources enable "AdGuard DNS Filter"
+clishield sources enable "AdGuard DNS Filter"
 
 # Disable a source
-adshield sources disable "Dan Pollock Hosts"
+clishield sources disable "Dan Pollock Hosts"
 ```
 
 ### Other Commands
 
 ```bash
 # Show version
-adshield --version
+clishield --version
 
 # Show help
-adshield --help
+clishield --help
 
 # Count blocked domains
-adshield stats
+clishield stats
 ```
 
 ---
@@ -168,10 +168,10 @@ adshield stats
 
 ### Config Directory
 
-AdShield stores its configuration in `~/.adshield/`:
+CliShield stores its configuration in `~/.clishield/`:
 
 ```
-~/.adshield/
+~/.clishield/
 ├── sources.json       # Blocklist source configuration
 ├── whitelist.txt      # Your whitelisted domains (one per line)
 ├── hosts.backup       # Backup of your original hosts file
@@ -189,7 +189,7 @@ The default configuration includes four well-known community blocklists:
 | Peter Lowe Ad & Tracking List   | ads + tracking| ~3k    |
 | Dan Pollock Hosts               | ads + tracking| ~15k   |
 
-You can add your own sources by editing `~/.adshield/sources.json`:
+You can add your own sources by editing `~/.clishield/sources.json`:
 
 ```json
 {
@@ -205,17 +205,17 @@ You can add your own sources by editing `~/.adshield/sources.json`:
 If a blocked domain is breaking a site you need, whitelist it:
 
 ```bash
-sudo adshield whitelist add cdn.example.com
-sudo adshield update
+sudo clishield whitelist add cdn.example.com
+sudo clishield update
 ```
 
-The whitelist is stored in `~/.adshield/whitelist.txt` — one domain per line. You can edit it directly.
+The whitelist is stored in `~/.clishield/whitelist.txt` — one domain per line. You can edit it directly.
 
 ---
 
 ## Limitations
 
-AdShield is transparent about what it **cannot** block:
+CliShield is transparent about what it **cannot** block:
 
 | Scenario | Can Block? | Why |
 |---|---|---|
@@ -231,7 +231,7 @@ AdShield is transparent about what it **cannot** block:
 
 **Why?** Hosts-file blocking works at the domain level. When ads are served from the *same domain* as legitimate content (first-party ads), there is no way to block them without also breaking the service.
 
-> **Tip:** For YouTube ad blocking, consider a browser extension like [uBlock Origin](https://ublockorigin.com/) alongside AdShield.
+> **Tip:** For YouTube ad blocking, consider a browser extension like [uBlock Origin](https://ublockorigin.com/) alongside CliShield.
 
 ---
 
@@ -243,12 +243,12 @@ The installer sets up a weekly auto-update job:
 - **Linux:** `cron` job — runs every Sunday at 04:00
 - **Windows:** Task Scheduler — runs every Sunday at 04:00
 
-Logs are written to `~/.adshield/update.log`.
+Logs are written to `~/.clishield/update.log`.
 
 To update manually at any time:
 
 ```bash
-sudo adshield update
+sudo clishield update
 ```
 
 ---
@@ -264,26 +264,26 @@ sudo bash uninstall.sh
 Or manually:
 
 ```bash
-sudo adshield deactivate
-sudo rm /usr/local/bin/adshield
-rm -rf ~/.adshield
-# macOS: also remove ~/Library/LaunchAgents/com.adshield.update.plist
+sudo clishield deactivate
+sudo rm /usr/local/bin/clishield
+rm -rf ~/.clishield
+# macOS: also remove ~/Library/LaunchAgents/com.clishield.update.plist
 ```
 
 ### Homebrew
 
 ```bash
-sudo adshield deactivate
-brew uninstall adshield
+sudo clishield deactivate
+brew uninstall clishield
 ```
 
 ### Windows (Administrator PowerShell)
 
 ```powershell
-adshield deactivate
-Remove-Item "$env:ProgramFiles\adshield" -Recurse -Force
-Remove-Item "$env:USERPROFILE\.adshield" -Recurse -Force
-Unregister-ScheduledTask -TaskName "AdShield Weekly Update" -Confirm:$false
+clishield deactivate
+Remove-Item "$env:ProgramFiles\clishield" -Recurse -Force
+Remove-Item "$env:USERPROFILE\.clishield" -Recurse -Force
+Unregister-ScheduledTask -TaskName "CliShield Weekly Update" -Confirm:$false
 # Remove from PATH manually via System Properties → Environment Variables
 ```
 
@@ -302,11 +302,11 @@ Contributions are welcome! Here's how to get started:
 ### Development Setup
 
 ```bash
-git clone https://github.com/USER/adshield.git
-cd adshield
-# The adshield script is a standalone Python file — no build step needed.
+git clone https://github.com/USER/clishield.git
+cd clishield
+# The clishield script is a standalone Python file — no build step needed.
 # Test locally:
-sudo python3 adshield activate
+sudo python3 clishield activate
 ```
 
 ### Guidelines
@@ -320,7 +320,7 @@ sudo python3 adshield activate
 
 ## License
 
-[MIT](LICENSE) © 2024–2026 AdShield Contributors
+[MIT](LICENSE) © 2024–2026 CliShield Contributors
 
 ---
 
